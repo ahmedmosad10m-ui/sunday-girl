@@ -101,6 +101,21 @@
       <div class="empty-cart" id="emptyCart"><span>♡</span><h3>Your bag is taking a little nap.</h3><p>Let’s find something that feels like you.</p><button class="button button-dark" id="continueShopping">Keep exploring</button></div>
       <div class="drawer-footer" id="drawerFooter"><div class="subtotal-row"><span>Subtotal</span><strong id="cartSubtotal">EGP 0.00</strong></div><p>This public catalog is for browsing only. Online ordering is coming soon.</p><button class="button button-dark checkout-button" id="checkoutButton">Online ordering soon</button><button class="continue-link" id="continueShoppingLink">Keep browsing</button></div>
     </aside>
+    <dialog class="product-details" id="productDetails" aria-labelledby="productDetailsTitle">
+      <div class="product-details-layout">
+        <div class="product-details-photo"><img id="productDetailsImage" src="" alt="" /></div>
+        <div class="product-details-copy">
+          <button class="icon-button product-details-close" id="productDetailsClose" type="button" aria-label="Close product details">×</button>
+          <p class="eyebrow" id="productDetailsCategory"></p>
+          <h2 id="productDetailsTitle"></h2>
+          <p class="product-details-price" id="productDetailsPrice"></p>
+          <p class="product-details-description" id="productDetailsDescription"></p>
+          <div class="product-details-section"><h3>How to use</h3><p id="productDetailsHowTo"></p></div>
+          <p class="product-details-note" id="productDetailsNote"></p>
+          <button class="button button-dark product-details-add" id="productDetailsAdd" type="button">Add to bag <span>♡</span></button>
+        </div>
+      </div>
+    </dialog>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script src="app.js"></script>
   </body>

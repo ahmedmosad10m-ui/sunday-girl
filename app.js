@@ -9,6 +9,17 @@ const products = [
   { id: 8, name: "Rosewater Glow Oil", category: "Skincare", price: 1458.47, rating: "4.9", reviews: 107, badge: "", image: "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=700&q=85", colors: ["#e4a8a0", "#d1b3a5", "#e1cdd4"] },
   { id: 9, name: "Sunday Softening Hair Oil", category: "Hair care", price: 1177.99, rating: "4.8", reviews: 63, badge: "new", image: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=700&q=85", colors: ["#d9b8a8", "#e8d9c9"] }
 ];
+const productDetails = {
+  1: { description: "A refreshing face mist designed for a quick, feel-good refresh in your everyday routine.", howTo: "Mist lightly over clean skin, keeping your eyes closed. Follow the directions on the product label.", note: "Check the packaging for the full ingredient list, size, and suitability information." },
+  2: { description: "A multi-use lip and cheek color for adding a soft touch of color to your look.", howTo: "Apply a small amount to lips or cheeks and blend. Follow the product label, especially if you have sensitive skin.", note: "Check the packaging for ingredients, shade name, size, and suitability information." },
+  3: { description: "A soft everyday headband to keep hair comfortably away while you get ready or follow your skincare routine.", howTo: "Wear comfortably around the hairline. Follow the care instructions on the packaging.", note: "Check the packaging for exact material composition and care instructions." },
+  4: { description: "A daily facial cleanser for a simple, fresh-feeling skincare routine.", howTo: "Use as directed on the label and rinse thoroughly. Avoid contact with eyes; discontinue if irritation occurs.", note: "Check the packaging for ingredients, size, and skin suitability information." },
+  5: { description: "A cream blush made for a soft pop of color as part of your everyday makeup routine.", howTo: "Tap a small amount onto cheeks and blend. Follow the product label and patch test if you have sensitive skin.", note: "Check the packaging for ingredients, shade name, size, and suitability information." },
+  6: { description: "A set of three satin scrunchies for everyday styling and keeping hair comfortably tied back.", howTo: "Use to tie hair without pulling too tightly. Follow the care instructions on the packaging.", note: "Check the packaging for exact material composition and care instructions." },
+  7: { description: "An SPF 30 sunscreen listing for a daily sun-care routine.", howTo: "Use only according to the product label, including its application and reapplication instructions.", note: "Verify the SPF rating, active ingredients, water-resistance details, size, and directions on the item packaging." },
+  8: { description: "A face oil listing for adding a finishing step to your skincare routine.", howTo: "Apply sparingly as directed on the product label. Avoid contact with eyes and discontinue if irritation occurs.", note: "Check the packaging for ingredients, size, and skin suitability information." },
+  9: { description: "A hair oil listing for a little extra care as part of your hair routine.", howTo: "Start with a small amount and use only as directed on the product label.", note: "Check the packaging for ingredients, size, and directions for use." }
+};
 const reviews = [
   { quote: "My whole bathroom shelf is slowly becoming a sunday girl shelf and honestly… no regrets.", name: "Jules M.", item: "Cloud Nine Hydrating Mist" },
   { quote: "Everything feels so thoughtful, from the products to the little packaging details. Obsessed.", name: "Ari L.", item: "Peachy Keen Lip & Cheek" },
@@ -39,9 +50,26 @@ function renderProducts(filter = "All") {
       <div class="product-info">
         <div class="product-title-row"><h3 class="product-title">${product.name}</h3><span class="product-price">${money(product.price)}</span></div>
         <div class="product-rating"><span>★★★★★</span>${product.rating} (${product.reviews})</div>
+        <button class="product-detail-trigger" data-details="${product.id}" aria-label="View details for ${product.name}">View product details <span>↗</span></button>
         <div class="product-swatches" aria-label="Available colors">${product.colors.map(color => `<span class="swatch" style="background:${color}"></span>`).join("")}</div>
       </div>
     </article>`).join("");
+}
+
+function openProductDetails(id) {
+  const product = products.find(item => item.id === Number(id));
+  const details = productDetails[product?.id];
+  if (!product || !details) return;
+  document.querySelector("#productDetailsImage").src = product.image;
+  document.querySelector("#productDetailsImage").alt = product.name;
+  document.querySelector("#productDetailsCategory").textContent = product.category;
+  document.querySelector("#productDetailsTitle").textContent = product.name;
+  document.querySelector("#productDetailsPrice").textContent = money(product.price);
+  document.querySelector("#productDetailsDescription").textContent = details.description;
+  document.querySelector("#productDetailsHowTo").textContent = details.howTo;
+  document.querySelector("#productDetailsNote").textContent = details.note;
+  document.querySelector("#productDetailsAdd").dataset.add = String(product.id);
+  document.querySelector("#productDetails").showModal();
 }
 
 function setBadge(element, count) {
@@ -120,7 +148,9 @@ function updateReviewCarousel() {
 document.querySelector("#productGrid").addEventListener("click", event => {
   const add = event.target.closest("[data-add]");
   const heart = event.target.closest("[data-wishlist]");
+  const details = event.target.closest("[data-details]");
   if (add) addToCart(add.dataset.add);
+  if (details) openProductDetails(details.dataset.details);
   if (heart) {
     const id = Number(heart.dataset.wishlist);
     if (wishlist.has(id)) wishlist.delete(id);
@@ -128,6 +158,15 @@ document.querySelector("#productGrid").addEventListener("click", event => {
     updateWishlistCount();
     renderProducts(document.querySelector(".product-tabs button.active").dataset.filter);
   }
+});
+
+document.querySelector("#productDetailsClose").addEventListener("click", () => document.querySelector("#productDetails").close());
+document.querySelector("#productDetailsAdd").addEventListener("click", event => {
+  addToCart(event.currentTarget.dataset.add);
+  document.querySelector("#productDetails").close();
+});
+document.querySelector("#productDetails").addEventListener("click", event => {
+  if (event.target === event.currentTarget) event.currentTarget.close();
 });
 
 document.querySelector(".product-tabs").addEventListener("click", event => {

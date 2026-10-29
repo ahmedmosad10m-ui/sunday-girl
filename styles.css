@@ -122,6 +122,9 @@ h2 { font-family:var(--serif); font-weight:500; font-size:clamp(36px,4.2vw,51px)
 .product-price { white-space:nowrap; font-size:11px; font-weight:600; }
 .product-rating { margin-top:7px; color:#777684; font-size:9px; }
 .product-rating span { color:#d1a153; letter-spacing:1px; margin-right:5px; }
+.product-detail-trigger { display:flex; align-items:center; gap:5px; margin-top:9px; padding:0; border:0; background:transparent; color:var(--rose-dark); font-size:9px; font-weight:600; cursor:pointer; }
+.product-detail-trigger span { transition:transform .2s; }
+.product-detail-trigger:hover span { transform:translate(2px,-2px); }
 .product-swatches { display:flex; gap:5px; margin-top:9px; }
 .swatch { width:10px; height:10px; border:1px solid #fff; outline:1px solid #d8d5e2; border-radius:50%; }
 .centered { text-align:center; margin-top:38px; }
@@ -211,6 +214,22 @@ h2 { font-family:var(--serif); font-weight:500; font-size:clamp(36px,4.2vw,51px)
 .checkout-scrim.open { opacity:1; visibility:visible; }
 .checkout-modal { position:fixed; z-index:42; top:50%; left:50%; width:min(760px,calc(100% - 32px)); max-height:min(90vh,850px); overflow:auto; padding:30px; border:1px solid #e8e4f0; border-radius:22px; background:#fefeff; box-shadow:0 24px 80px #29243330; opacity:0; visibility:hidden; transform:translate(-50%,-46%); transition:opacity .25s,visibility .25s,transform .25s; }
 .checkout-modal.open { opacity:1; visibility:visible; transform:translate(-50%,-50%); }
+.product-details { position:fixed; width:min(760px,calc(100% - 32px)); max-height:min(88vh,760px); padding:0; overflow:auto; border:1px solid #e8e4f0; border-radius:22px; background:var(--paper); color:var(--ink); box-shadow:0 24px 80px #29243330; }
+.product-details::backdrop { background:#28243370; backdrop-filter:blur(3px); }
+.product-details-layout { display:grid; grid-template-columns:.92fr 1.08fr; min-height:390px; }
+.product-details-photo { min-height:390px; overflow:hidden; background:var(--lavender-soft); }
+.product-details-photo img { width:100%; height:100%; min-height:390px; display:block; object-fit:cover; }
+.product-details-copy { position:relative; padding:38px 34px 30px; }
+.product-details-close { position:absolute; top:17px; right:17px; width:34px; height:34px; border-radius:50%; background:#efedf6; font-size:24px; }
+.product-details-copy .eyebrow { margin:0 40px 10px 0; }
+.product-details-copy h2 { margin:0; font-size:clamp(28px,4vw,39px); line-height:1.13; }
+.product-details-price { margin:13px 0 17px; color:var(--rose-dark); font-size:15px; font-weight:700; }
+.product-details-description,.product-details-section p,.product-details-note { color:#696876; font-size:11px; line-height:1.75; }
+.product-details-section { margin-top:20px; padding-top:16px; border-top:1px solid var(--line); }
+.product-details-section h3 { margin:0 0 6px; font-size:11px; }
+.product-details-section p { margin:0; }
+.product-details-note { margin:15px 0 19px; font-size:9px; }
+.product-details-add { width:100%; justify-content:space-between; }
 .checkout-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; padding-bottom:18px; border-bottom:1px solid var(--line); }
 .checkout-header .eyebrow { margin-bottom:7px; }
 .checkout-header h2 { font-size:32px; }
@@ -297,6 +316,11 @@ h2 { font-family:var(--serif); font-weight:500; font-size:clamp(36px,4.2vw,51px)
   .newsletter { grid-column:1/-1; }.newsletter h2 { font-size:24px; }.footer-bottom { gap:10px 14px; font-size:7px; }.footer-bottom span:last-child { text-align:right; }
   .cart-drawer { padding:23px 20px 17px; }
   .checkout-modal { max-height:92vh; padding:22px 18px 18px; border-radius:18px; }
+  .product-details { max-height:92vh; border-radius:18px; }
+  .product-details-layout { grid-template-columns:1fr; }
+  .product-details-photo,.product-details-photo img { min-height:0; height:210px; }
+  .product-details-copy { padding:24px 20px 20px; }
+  .product-details-copy h2 { font-size:29px; }
   .checkout-header { margin-bottom:17px; }.checkout-header h2 { font-size:27px; }
   .checkout-columns { grid-template-columns:1fr; gap:20px; }
   .checkout-summary { order:-1; }
